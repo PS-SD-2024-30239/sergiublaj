@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: user-mgmt-backend
+  datasource:
+    url: jdbc:postgresql://localhost:5432/user_mgmt_db
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+server:
+  servlet:
+    context-path: '/api'
+  port: 8555
