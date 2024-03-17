@@ -16,3 +16,6 @@ server:
   port: 8777
   servlet:
     context-path: '/api'
+  error:
+    whitelabel:
+      enabled: false

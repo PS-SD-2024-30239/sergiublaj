@@ -1,14 +1,30 @@
 package ro.ps.chefmgmtbackend.controller;
 
+import java.util.List;
+import java.util.UUID;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import ro.ps.chefmgmtbackend.dto.ChefRequestDTO;
 import ro.ps.chefmgmtbackend.dto.ChefResponseDTO;
+import ro.ps.chefmgmtbackend.dto.CollectionResponseDTO;
+import ro.ps.chefmgmtbackend.dto.PageRequestDTO;
+import ro.ps.chefmgmtbackend.exception.ExceptionBody;
 import ro.ps.chefmgmtbackend.service.ChefService;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/chef/v1")
@@ -17,10 +33,35 @@ public class ChefController {
 
     private final ChefService chefService;
 
+    @GetMapping("/{id}")
+    @Operation(summary = "Gets chef by ID", description = "Chef must exist")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Chef found",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ChefResponseDTO.class))}),
+            @ApiResponse(responseCode = "404", description = "Chef not found",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionBody.class))}),
+            @ApiResponse(responseCode = "500", description = "Internal server error",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionBody.class))})
+    })
+    public ResponseEntity<ChefResponseDTO> findById(@PathVariable("id") UUID chefId) {
+        return new ResponseEntity<>(
+                chefService.findById(chefId),
+                HttpStatus.OK
+        );
+    }
+
     @GetMapping("/all")
     public ResponseEntity<List<ChefResponseDTO>> findAll() {
         return new ResponseEntity<>(
                 chefService.findAll(),
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/all-paged")
+    public ResponseEntity<CollectionResponseDTO<ChefResponseDTO>> findAllPaged(@Valid PageRequestDTO page) {
+        return new ResponseEntity<>(
+                chefService.findAllPaged(page),
                 HttpStatus.OK
         );
     }
@@ -37,7 +78,7 @@ public class ChefController {
 
     @GetMapping("/all3")
     public ResponseEntity<List<ChefResponseDTO>> findAllByRating2(
-            @RequestParam("rating") double rating
+            @RequestParam(value = "rating", defaultValue = "10", required = false) double rating
     ) {
         return new ResponseEntity<>(
                 chefService.findAllByRatingGreaterThan(rating),
