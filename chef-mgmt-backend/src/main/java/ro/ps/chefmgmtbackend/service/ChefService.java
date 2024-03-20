@@ -24,6 +24,8 @@ public interface ChefService {
 
     CollectionResponseDTO<ChefResponseDTO> findAllPaged(PageRequestDTO page);
 
+    List<ChefResponseDTO> findAllSorted(String sortBy);
+
     /**
      * Method that returns all chefs with a rating greater than a given rating
      *

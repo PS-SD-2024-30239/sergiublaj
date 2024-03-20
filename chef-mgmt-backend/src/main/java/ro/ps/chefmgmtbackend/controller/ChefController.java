@@ -66,6 +66,17 @@ public class ChefController {
         );
     }
 
+
+    @GetMapping("/all-sorted")
+    public ResponseEntity<List<ChefResponseDTO>> findAllSorted(
+            @RequestParam(value = "sortBy", defaultValue = "", required = false) String sortBy
+    ) {
+        return new ResponseEntity<>(
+                chefService.findAllSorted(sortBy),
+                HttpStatus.OK
+        );
+    }
+
     @GetMapping("/all2/{rating}")
     public ResponseEntity<List<ChefResponseDTO>> findAllByRating(
             @PathVariable("rating") double rating

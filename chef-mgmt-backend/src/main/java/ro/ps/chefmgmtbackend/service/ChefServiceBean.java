@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 import ro.ps.chefmgmtbackend.dto.ChefRequestDTO;
 import ro.ps.chefmgmtbackend.dto.ChefResponseDTO;
@@ -62,6 +63,13 @@ public class ChefServiceBean implements ChefService {
         List<ChefResponseDTO> chefs = chefMapper.chefEntityListToChefResponseDTOList(chefEntityList.getContent());
 
         return new CollectionResponseDTO<>(chefs, chefEntityList.getTotalElements());
+    }
+
+    @Override
+    public List<ChefResponseDTO> findAllSorted(String sortBy) {
+        List<ChefEntity> chefEntityList = chefRepository.findAll(Sort.by(sortBy).descending());
+
+        return chefMapper.chefEntityListToChefResponseDTOList(chefEntityList);
     }
 
     @Override
