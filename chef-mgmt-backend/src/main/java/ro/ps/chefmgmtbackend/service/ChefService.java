@@ -3,8 +3,8 @@ package ro.ps.chefmgmtbackend.service;
 import java.util.List;
 import java.util.UUID;
 
-import ro.ps.chefmgmtbackend.dto.ChefRequestDTO;
-import ro.ps.chefmgmtbackend.dto.ChefResponseDTO;
+import ro.ps.chefmgmtbackend.dto.chef.ChefRequestDTO;
+import ro.ps.chefmgmtbackend.dto.chef.ChefResponseDTO;
 import ro.ps.chefmgmtbackend.dto.CollectionResponseDTO;
 import ro.ps.chefmgmtbackend.dto.PageRequestDTO;
 

@@ -1,4 +1,4 @@
-package ro.ps.chefmgmtbackend.dto;
+package ro.ps.chefmgmtbackend.dto.chef;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

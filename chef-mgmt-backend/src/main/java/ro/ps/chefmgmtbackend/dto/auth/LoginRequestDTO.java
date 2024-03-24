@@ -1,4 +1,4 @@
-package ro.ps.chefmgmtbackend.dto;
+package ro.ps.chefmgmtbackend.dto.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +9,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChefRequestDTO {
+public class LoginRequestDTO {
 
-    private String name;
-    private double rating;
+    private String email;
+    private String password;
 }
