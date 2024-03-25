@@ -68,9 +68,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
 
-        objectMapper.writeValue(
-                response.getWriter(),
-                new ExceptionBody(failed.getMessage())
-        );
+        objectMapper.writeValue(response.getWriter(), new ExceptionBody(failed.getMessage()));
     }
 }
