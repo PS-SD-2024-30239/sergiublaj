@@ -17,10 +17,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import ro.ps.chefmgmtbackend.exception.AccessDeniedHandlerBean;
 import ro.ps.chefmgmtbackend.repository.UserRepository;
-import ro.ps.chefmgmtbackend.security.filter.authentication.login.LoginFailureHandler;
-import ro.ps.chefmgmtbackend.security.filter.authentication.login.LoginFilter;
-import ro.ps.chefmgmtbackend.security.filter.authentication.login.LoginSuccessHandler;
-import ro.ps.chefmgmtbackend.security.filter.authorization.AuthorizationFilter;
+import ro.ps.chefmgmtbackend.security.filter.AuthorizationFilter;
+import ro.ps.chefmgmtbackend.security.filter.LoginFilter;
 import ro.ps.chefmgmtbackend.security.service.UserDetailsServiceBean;
 import ro.ps.chefmgmtbackend.security.util.SecurityConstants;
 
@@ -62,7 +60,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(SecurityConstants.SALT);
+        return new BCryptPasswordEncoder(SecurityConstants.PASSWORD_STRENGTH);
     }
 
     @Bean
@@ -76,28 +74,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public LoginFilter loginFilter(
-            ObjectMapper objectMapper,
-            AuthenticationManager authenticationManager,
-            LoginSuccessHandler loginSuccessHandler,
-            LoginFailureHandler loginFailureHandler
-    ) {
-        return new LoginFilter(
-                objectMapper,
-                authenticationManager,
-                loginSuccessHandler,
-                loginFailureHandler
-        );
-    }
-
-    @Bean
-    public LoginSuccessHandler loginSuccessHandler() {
-        return new LoginSuccessHandler();
-    }
-
-    @Bean
-    public LoginFailureHandler loginFailureHandler(ObjectMapper objectMapper) {
-        return new LoginFailureHandler(objectMapper);
+    public LoginFilter loginFilter(ObjectMapper objectMapper, AuthenticationManager authenticationManager) {
+        return new LoginFilter(objectMapper, authenticationManager);
     }
 
     @Bean

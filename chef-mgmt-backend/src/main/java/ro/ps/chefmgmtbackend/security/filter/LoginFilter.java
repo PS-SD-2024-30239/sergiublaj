@@ -1,33 +1,35 @@
-package ro.ps.chefmgmtbackend.security.filter.authentication.login;
+package ro.ps.chefmgmtbackend.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import ro.ps.chefmgmtbackend.dto.auth.LoginRequestDTO;
+import ro.ps.chefmgmtbackend.exception.ExceptionBody;
+import ro.ps.chefmgmtbackend.security.util.JwtUtil;
 import ro.ps.chefmgmtbackend.security.util.SecurityConstants;
+
+import java.io.IOException;
 
 @Slf4j
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     private final ObjectMapper objectMapper;
 
-    public LoginFilter(
-            ObjectMapper objectMapper,
-            AuthenticationManager authenticationManager,
-            LoginSuccessHandler loginSuccessHandler,
-            LoginFailureHandler loginFailureHandler
-    ) {
+    public LoginFilter(ObjectMapper objectMapper, AuthenticationManager authenticationManager) {
         this.objectMapper = objectMapper;
         this.setAuthenticationManager(authenticationManager);
         this.setFilterProcessesUrl(SecurityConstants.LOGIN_URL);
-        this.setAuthenticationSuccessHandler(loginSuccessHandler);
-        this.setAuthenticationFailureHandler(loginFailureHandler);
     }
 
     @Override
@@ -48,5 +50,27 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
             throw new BadCredentialsException(e.getMessage());
         }
+    }
+
+    @Override
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) {
+        String accessToken = JwtUtil.generateJwtToken(
+                ((User) authResult.getPrincipal()).getUsername(),
+                authResult.getAuthorities()
+        );
+        response.addCookie(JwtUtil.buildCookie(SecurityConstants.JWT_TOKEN, accessToken));
+
+        response.setStatus(HttpStatus.OK.value());
+    }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException {
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+
+        objectMapper.writeValue(
+                response.getWriter(),
+                new ExceptionBody(failed.getMessage())
+        );
     }
 }
