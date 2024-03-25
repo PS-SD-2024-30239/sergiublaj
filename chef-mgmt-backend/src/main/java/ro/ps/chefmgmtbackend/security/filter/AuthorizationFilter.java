@@ -22,8 +22,8 @@ import ro.ps.chefmgmtbackend.security.util.JwtUtil;
 
 import javax.crypto.SecretKey;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -50,7 +50,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                     .parse(jwtToken)
                     .getPayload();
             String email = claims.getSubject();
-            Collection<SimpleGrantedAuthority> authorities = Arrays.stream((String[]) claims.get("role"))
+            Collection<SimpleGrantedAuthority> authorities = ((List<String>) claims.get("role")).stream()
                     .map(SimpleGrantedAuthority::new)
                     .toList();
             Authentication authentication = new UsernamePasswordAuthenticationToken(email, null, authorities);
