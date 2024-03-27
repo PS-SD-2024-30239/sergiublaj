@@ -40,6 +40,7 @@ public class SecurityConfig {
                 .exceptionHandling(handler -> handler.accessDeniedHandler(accessDeniedHandler))
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers(SecurityConstants.AUTH_PATHS_TO_SKIP).permitAll()
+                        .requestMatchers(SecurityConstants.SWAGGER_PATHS_TO_SKIP).permitAll()
                         .anyRequest().authenticated())
                 .addFilter(loginFilter)
                 .addFilterAfter(authorizationFilter, LoginFilter.class)
