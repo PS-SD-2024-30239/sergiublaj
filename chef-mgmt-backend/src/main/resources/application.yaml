@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: chef-mgmt-backend
+  datasource:
+    url: jdbc:postgresql://localhost:5432/chef_mgmt_db
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+server:
+  port: 8777
+  servlet:
+    context-path: '/api'
+  error:
+    whitelabel:
+      enabled: false
+security:
+  secret-key: PS-SD-2024-3023X-1q2w3e4r5t6y7u8i9o0p
+  token-expiration-days: 15
