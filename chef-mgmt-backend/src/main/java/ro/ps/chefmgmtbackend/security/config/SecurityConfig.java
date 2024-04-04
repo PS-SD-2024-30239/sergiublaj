@@ -70,7 +70,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthorizationFilter authorizationManager(ObjectMapper objectMapper) {
+    public AuthorizationFilter authorizationFilter(ObjectMapper objectMapper) {
         return new AuthorizationFilter(objectMapper);
     }
 
