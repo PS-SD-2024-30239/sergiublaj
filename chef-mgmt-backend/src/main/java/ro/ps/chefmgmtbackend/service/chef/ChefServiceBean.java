@@ -1,4 +1,4 @@
-package ro.ps.chefmgmtbackend.service;
+package ro.ps.chefmgmtbackend.service.chef;
 
 import java.util.List;
 import java.util.UUID;
@@ -29,14 +29,6 @@ public class ChefServiceBean implements ChefService {
 
     @Override
     public ChefResponseDTO findById(UUID chefId) {
-        //        Optional<ChefEntity> chefOptional = chefRepository.findById(chefId);
-        //        if (chefOptional.isEmpty()) {
-        //            throw new NotFoundException(
-        //                    String.format(ExceptionCode.ERR001_CHEF_NOT_FOUND.getMessage(), chefId)
-        //            );
-        //        }
-        //
-        //        return chefMapper.chefEntityToChefResponseDTO(chefOptional.get());
         return chefRepository.findById(chefId)
                 .map(chefMapper::chefEntityToChefResponseDTO)
                 .orElseThrow(() -> new NotFoundException(String.format(

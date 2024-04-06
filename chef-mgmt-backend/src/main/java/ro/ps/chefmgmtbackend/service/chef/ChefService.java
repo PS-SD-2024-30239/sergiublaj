@@ -1,4 +1,4 @@
-package ro.ps.chefmgmtbackend.service;
+package ro.ps.chefmgmtbackend.service.chef;
 
 import java.util.List;
 import java.util.UUID;

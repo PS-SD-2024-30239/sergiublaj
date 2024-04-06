@@ -19,7 +19,7 @@ import ro.ps.chefmgmtbackend.dto.chef.ChefResponseDTO;
 import ro.ps.chefmgmtbackend.dto.CollectionResponseDTO;
 import ro.ps.chefmgmtbackend.dto.PageRequestDTO;
 import ro.ps.chefmgmtbackend.exception.ExceptionBody;
-import ro.ps.chefmgmtbackend.service.ChefService;
+import ro.ps.chefmgmtbackend.service.chef.ChefService;
 
 @RestController
 @CrossOrigin("*")
