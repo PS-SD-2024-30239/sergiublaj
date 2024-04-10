@@ -1,8 +1,5 @@
 package ro.ps.chefmgmtbackend.controller;
 
-import java.util.List;
-import java.util.UUID;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -14,15 +11,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import ro.ps.chefmgmtbackend.dto.chef.ChefRequestDTO;
-import ro.ps.chefmgmtbackend.dto.chef.ChefResponseDTO;
 import ro.ps.chefmgmtbackend.dto.CollectionResponseDTO;
 import ro.ps.chefmgmtbackend.dto.PageRequestDTO;
+import ro.ps.chefmgmtbackend.dto.chef.ChefRequestDTO;
+import ro.ps.chefmgmtbackend.dto.chef.ChefResponseDTO;
 import ro.ps.chefmgmtbackend.exception.ExceptionBody;
 import ro.ps.chefmgmtbackend.service.chef.ChefService;
 
+import java.util.List;
+import java.util.UUID;
+
 @RestController
-@CrossOrigin("*")
 @RequestMapping("/chef/v1")
 @RequiredArgsConstructor
 public class ChefController {

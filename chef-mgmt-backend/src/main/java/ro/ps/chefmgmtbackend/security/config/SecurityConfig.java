@@ -15,12 +15,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 import ro.ps.chefmgmtbackend.exception.AccessDeniedHandlerBean;
 import ro.ps.chefmgmtbackend.repository.UserRepository;
 import ro.ps.chefmgmtbackend.security.filter.AuthorizationFilter;
 import ro.ps.chefmgmtbackend.security.filter.LoginFilter;
 import ro.ps.chefmgmtbackend.security.service.UserDetailsServiceBean;
 import ro.ps.chefmgmtbackend.security.util.SecurityConstants;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -41,10 +46,26 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers(SecurityConstants.AUTH_PATHS_TO_SKIP).permitAll()
                         .requestMatchers(SecurityConstants.SWAGGER_PATHS_TO_SKIP).permitAll()
+                        .requestMatchers("/cart").permitAll()
                         .anyRequest().authenticated())
                 .addFilter(loginFilter)
                 .addFilterAfter(authorizationFilter, LoginFilter.class)
                 .build();
+    }
+
+    @Bean
+    public CorsFilter corsFilter() {
+        final CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(List.of("http://localhost:4200"));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setExposedHeaders(List.of("*"));
+        config.setAllowCredentials(true);
+
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+
+        return new CorsFilter(source);
     }
 
     @Bean
