@@ -46,7 +46,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers(SecurityConstants.AUTH_PATHS_TO_SKIP).permitAll()
                         .requestMatchers(SecurityConstants.SWAGGER_PATHS_TO_SKIP).permitAll()
-                        .requestMatchers("/cart").permitAll()
                         .anyRequest().authenticated())
                 .addFilter(loginFilter)
                 .addFilterAfter(authorizationFilter, LoginFilter.class)
