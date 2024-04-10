@@ -1,19 +1,23 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AuthService} from "../../../core/service/auth/auth.service";
-import {UserService} from "../../../core/service/user/user.service";
-import {Router} from "@angular/router";
-import {LoginModel} from "../../../shared/models/login.model";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { AuthService } from '../../../core/service/auth/auth.service';
+import { UserService } from '../../../core/service/user/user.service';
+import { LoginModel } from '../../../shared/models/login.model';
+
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   loginForm: FormGroup = new FormGroup({});
   errorMessage?: string;
+  loginSubscription?: Subscription;
+  getInfoSubscription?: Subscription;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -27,11 +31,20 @@ export class LoginComponent implements OnInit {
     this.buildLoginForm();
   }
 
+  ngOnDestroy(): void {
+    this.unsubscribeFromSubscribers();
+  }
+
   private buildLoginForm(): void {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password2: ['', [Validators.required]]
     });
+  }
+
+  private unsubscribeFromSubscribers(): void {
+    this.loginSubscription?.unsubscribe();
+    this.getInfoSubscription?.unsubscribe();
   }
 
   login(): void {
@@ -43,18 +56,18 @@ export class LoginComponent implements OnInit {
 
     const credentials: LoginModel = {
       email: this.loginForm?.get('email')?.value,
-      password: this.loginForm?.get('password2')?.value,
-    }
-    this.authService.login(credentials).subscribe({
+      password: this.loginForm?.get('password2')?.value
+    };
+    this.loginSubscription = this.authService.login(credentials).subscribe({
       next: () => this.getUserInfo(),
       error: () => this.errorMessage = 'Invalid credentials'
     });
   }
 
   private getUserInfo(): void {
-    this.userService.getInfo().subscribe(response => {
+    this.getInfoSubscription = this.userService.getInfo().subscribe(response => {
       localStorage.setItem('loggedUser', JSON.stringify(response));
-      this.router.navigateByUrl('/dashboard/chefs')
-    })
+      this.router.navigateByUrl('/dashboard/chefs');
+    });
   }
 }
