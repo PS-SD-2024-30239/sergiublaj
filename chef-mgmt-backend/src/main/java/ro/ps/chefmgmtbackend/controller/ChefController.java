@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 @RequestMapping("/chef/v1")
 @RequiredArgsConstructor
 public class ChefController {

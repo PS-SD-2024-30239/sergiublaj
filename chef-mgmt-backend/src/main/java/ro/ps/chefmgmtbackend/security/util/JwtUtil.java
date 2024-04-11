@@ -46,7 +46,7 @@ public class JwtUtil {
     public Cookie buildCookie(String cookieName, String cookieValue) {
         Cookie cookie = new Cookie(cookieName, cookieValue);
         cookie.setPath("/");
-        cookie.setMaxAge(JwtUtil.tokenExpirationDays);
+        cookie.setMaxAge((int) JwtUtil.getExpirationDate(JwtUtil.tokenExpirationDays).getTime());
 
         return cookie;
     }
