@@ -5,19 +5,23 @@ import { CookieService } from 'ngx-cookie-service';
 
 export const requestInterceptor: HttpInterceptorFn = (req, next) => {
   const modifiedReq = req.clone({
-    url: 'http://localhost:8777/api/' + req.url,
-    headers: getHeaders(req.url, req.headers),
+    url: getUrl(req.url),
+    headers: getHeaders(req.url),
     withCredentials: true
   });
 
   return next(modifiedReq);
 };
 
-const getHeaders = (url: string, httpHeaders: HttpHeaders): HttpHeaders => {
+const getUrl = (url: string): string => {
+  return 'http://localhost:8777/api/' + url;
+}
+
+const getHeaders = (url: string): HttpHeaders => {
   const cookieService = inject(CookieService);
   const jwtToken = cookieService.get('jwt-token');
 
-  return url.includes('auth')
+  return url.includes('auth') || jwtToken === ''
     ? new HttpHeaders()
     : new HttpHeaders({ 'Authorization': `Bearer ${jwtToken}` });
 };

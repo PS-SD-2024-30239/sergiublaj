@@ -1,17 +1,19 @@
-<h5>All chefs</h5>
-
-<div class="mb-3 d-flex flex-row">
-  <label class="form-label">Rating: </label>
-  <input type="number" class="form-control" [(ngModel)]="rating">
-  <button class="btn btn-danger" (click)="searchAllByRating()">
-    <i class="fa fa-magnifying-glass"></i>
-  </button>
-</div>
-
 <div class="container">
-  @for (chef of chefs; track chef.id) {
-    <app-chef-card [chef]="chef" (deleteChef)="deleteChefCalled($event)"></app-chef-card>
-  } @empty {
-    <p>No chef</p>
-  }
+  <h5>All chefs</h5>
+
+  <div class="mb-3 d-flex flex-row">
+    <label class="form-label">Rating: </label>
+    <input type="number" class="form-control" [(ngModel)]="rating">
+    <button class="btn btn-danger" (click)="searchAllByRating()">
+      <i class="fa fa-magnifying-glass"></i>
+    </button>
+  </div>
+
+  <div class="p-2">
+    @for (chef of chefs; track chef.id) {
+      <app-chef-card [chef]="chef" (deleteChef)="deleteChefCalled($event)"></app-chef-card>
+    } @empty {
+      <p>No chef</p>
+    }
+  </div>
 </div>
