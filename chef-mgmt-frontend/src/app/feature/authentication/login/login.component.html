@@ -4,15 +4,15 @@
       <p>Login</p>
     </div>
 
-    <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <form (ngSubmit)="login()" [formGroup]="loginForm">
       <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Email address</label>
-        <input type="email" formControlName="email" class="form-control" id="exampleInputEmail1"
-               aria-describedby="emailHelp">
+        <label class="form-label" for="exampleInputEmail1">Email address</label>
+        <input aria-describedby="emailHelp" class="form-control" formControlName="email" id="exampleInputEmail1"
+          type="email">
       </div>
       <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">Password</label>
-        <input type="password" formControlName="password2" class="form-control" id="exampleInputPassword1">
+        <label class="form-label" for="exampleInputPassword1">Password</label>
+        <input class="form-control" formControlName="password2" id="exampleInputPassword1" type="password">
       </div>
       @if (errorMessage) {
         <div class="alert alert-danger" role="alert">
@@ -20,7 +20,7 @@
         </div>
       }
       <div class="d-flex justify-content-center">
-        <button type="submit" class="btn btn-primary">Login</button>
+        <button class="btn btn-primary" type="submit">Login</button>
       </div>
     </form>
   </div>

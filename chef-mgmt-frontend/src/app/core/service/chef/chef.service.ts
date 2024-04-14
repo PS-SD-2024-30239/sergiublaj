@@ -1,10 +1,11 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {ChefModel} from "../../../shared/models/chef.model";
-import {Observable} from "rxjs";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ChefModel } from '../../../shared/models/chef.model';
+
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ChefService {
 
@@ -18,8 +19,8 @@ export class ChefService {
   getAll(rating: number = 0): Observable<ChefModel[]> {
     return this.http.get<ChefModel[]>('chef/v1/all3', {
       params: {
-        rating
-      }
+        rating,
+      },
     });
   }
 }

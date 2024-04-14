@@ -8,7 +8,7 @@ import { ChefModel } from '../../../shared/models/chef.model';
 @Component({
   selector: 'app-chef',
   templateUrl: './chef.component.html',
-  styleUrl: './chef.component.css'
+  styleUrl: './chef.component.scss',
 })
 export class ChefComponent implements OnInit, OnDestroy {
 

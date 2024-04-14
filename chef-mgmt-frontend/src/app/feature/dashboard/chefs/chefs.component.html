@@ -3,9 +3,12 @@
 
   <div class="mb-3 d-flex flex-row">
     <label class="form-label">Rating: </label>
-    <input type="number" class="form-control" [(ngModel)]="rating">
-    <button class="btn btn-danger" (click)="searchAllByRating()">
+    <input [(ngModel)]="rating" class="form-control" type="number">
+    <button (click)="searchAllByRating()" class="btn btn-info">
       <i class="fa fa-magnifying-glass"></i>
+    </button>
+    <button (click)="logOut()" class="btn btn-danger">
+      <i class="fa fa-right-from-bracket"></i>
     </button>
   </div>
 

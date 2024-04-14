@@ -10,7 +10,7 @@ import { LoginModel } from '../../../shared/models/login.model';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
   ) {
   }
 
@@ -35,18 +35,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.unsubscribeFromSubscribers();
   }
 
-  private buildLoginForm(): void {
-    this.loginForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password2: ['', [Validators.required]]
-    });
-  }
-
-  private unsubscribeFromSubscribers(): void {
-    this.loginSubscription?.unsubscribe();
-    this.getInfoSubscription?.unsubscribe();
-  }
-
   login(): void {
     if (!this.loginForm?.valid) {
       this.errorMessage = 'Invalid form completion!';
@@ -56,12 +44,24 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     const credentials: LoginModel = {
       email: this.loginForm?.get('email')?.value,
-      password: this.loginForm?.get('password2')?.value
+      password: this.loginForm?.get('password2')?.value,
     };
     this.loginSubscription = this.authService.login(credentials).subscribe({
       next: () => this.getUserInfo(),
-      error: () => this.errorMessage = 'Invalid credentials'
+      error: () => this.errorMessage = 'Invalid credentials',
     });
+  }
+
+  private buildLoginForm(): void {
+    this.loginForm = this.formBuilder.group({
+      email: [ '', [ Validators.required, Validators.email ] ],
+      password2: [ '', [ Validators.required ] ],
+    });
+  }
+
+  private unsubscribeFromSubscribers(): void {
+    this.loginSubscription?.unsubscribe();
+    this.getInfoSubscription?.unsubscribe();
   }
 
   private getUserInfo(): void {

@@ -1,23 +1,22 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from "@angular/router";
-import {LoginComponent} from "./login/login.component";
-import {NotFoundComponent} from "../../shared/components/not-found/not-found.component";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { LoginComponent } from './login/login.component';
 
 
 export const routes: Routes = [
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
   },
   {
     path: '**',
-    component: NotFoundComponent
+    redirectTo: 'login',
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  imports: [ RouterModule.forChild(routes) ],
+  exports: [ RouterModule ],
 })
 export class AuthenticationRoutingModule {
 }
