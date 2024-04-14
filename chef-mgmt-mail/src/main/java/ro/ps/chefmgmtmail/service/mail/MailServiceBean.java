@@ -28,7 +28,7 @@ public class MailServiceBean implements MailService {
             String email = MailUtils.getEmail(mailRequestDTO);
 
             sendEmail(mailRequestDTO, email);
-        } catch (IOException | MessagingException e) {
+        } catch (Exception e) {
             log.error("Error! {}", e.getMessage());
 
             return new MailResponseDTO(mailRequestDTO.getFrom(), mailRequestDTO.getTo(), SendingStatus.FAILURE);
