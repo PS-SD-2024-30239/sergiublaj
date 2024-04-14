@@ -24,6 +24,12 @@ public class ExceptionHandlingController {
         return new ExceptionBody(getMessageFromInvalidArguments(exception));
     }
 
+    @ExceptionHandler(RestTemplateException.class)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public final ExceptionBody handleMessagingException(RestTemplateException exception) {
+        return new ExceptionBody(exception.getMessage());
+    }
+
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public final ExceptionBody handleException(Exception exception) {
