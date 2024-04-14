@@ -20,8 +20,8 @@ public class MailController {
 
     private final MailService mailService;
 
-    @PostMapping
-    public ResponseEntity<MailResponseDTO> sendMail(@RequestBody MailRequestDTO mailRequestDTO) {
+    @PostMapping("async")
+    public ResponseEntity<MailResponseDTO> sendAsyncMail(@RequestBody MailRequestDTO mailRequestDTO) {
         return new ResponseEntity<>(
                 mailService.sendMail(mailRequestDTO),
                 HttpStatus.OK

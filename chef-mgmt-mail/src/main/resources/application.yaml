@@ -6,6 +6,10 @@ spring:
     port: 587
     username: ff61e4e8d71e4e
     password: 69f3d7a3e2a127
+  activemq:
+    broker-url: tcp://localhost:61616
+    user: admin
+    password: admin
 server:
   port: 8888
   servlet:
@@ -13,3 +17,5 @@ server:
   error:
     whitelabel:
       enabled: false
+queues:
+  async-mail-sender-request: async-mail-sender-request
