@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: chef-mgmt-mail
+  mail:
+    host: sandbox.smtp.mailtrap.io
+    port: 465
+    username: bbf6d23d562306
+    password: 626603ff9ba609
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+server:
+  port: 8888
+  servlet:
+    context-path: '/api'
+  error:
+    whitelabel:
+      enabled: false
