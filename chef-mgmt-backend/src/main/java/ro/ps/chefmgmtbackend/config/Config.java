@@ -1,13 +1,12 @@
 package ro.ps.chefmgmtbackend.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.core.JmsTemplate;
-import org.springframework.jms.support.converter.MappingJackson2MessageConverter;
-import org.springframework.jms.support.converter.MessageConverter;
 import ro.ps.chefmgmtbackend.mapper.ChefMapper;
 import ro.ps.chefmgmtbackend.mapper.UserMapper;
 import ro.ps.chefmgmtbackend.repository.ChefRepository;
@@ -52,13 +51,9 @@ public class Config {
     @Bean
     public MailService asyncMailServiceBean(
             @Value("${queues.async-mail-sender-request}") String destination,
-            JmsTemplate jmsTemplate
+            JmsTemplate jmsTemplate,
+            ObjectMapper objectMapper
     ) {
-        return new AsyncMailServiceBean(destination, jmsTemplate);
-    }
-
-    @Bean
-    public MessageConverter messageConverter() {
-        return new MappingJackson2MessageConverter();
+        return new AsyncMailServiceBean(destination, jmsTemplate, objectMapper);
     }
 }

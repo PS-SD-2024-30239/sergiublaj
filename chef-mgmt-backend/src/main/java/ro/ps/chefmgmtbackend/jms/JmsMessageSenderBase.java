@@ -1,5 +1,6 @@
 package ro.ps.chefmgmtbackend.jms;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.core.JmsTemplate;
 import ro.ps.chefmgmtbackend.dto.mail.SendingStatus;
@@ -9,19 +10,24 @@ public abstract class JmsMessageSenderBase<Request> implements MessageSender<Req
 
     protected final String destination;
     protected final JmsTemplate jmsTemplate;
+    protected final ObjectMapper objectMapper;
 
-    protected JmsMessageSenderBase(String destination, JmsTemplate jmsTemplate) {
+    protected JmsMessageSenderBase(String destination, JmsTemplate jmsTemplate, ObjectMapper objectMapper) {
         this.destination = destination;
         this.jmsTemplate = jmsTemplate;
+        this.objectMapper = objectMapper;
     }
 
     public SendingStatus sendMessage(Request request) {
+        log.info("Sending message <{}> to queue <{}>", request, destination);
+
         try {
-            jmsTemplate.convertAndSend(destination, request);
+            String payload = objectMapper.writeValueAsString(request);
+            jmsTemplate.send(destination, messageCreator -> messageCreator.createTextMessage(payload));
 
             return SendingStatus.SUCCESS;
         } catch (Exception e) {
-            log.error("Error while sending message");
+            log.error("Failed to send message <{}> to queue <{}>", request, destination);
         }
 
         return SendingStatus.FAILURE;
