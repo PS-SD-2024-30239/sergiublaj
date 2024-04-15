@@ -1,14 +1,14 @@
 package ro.ps.chefmgmtmail.util;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Map;
+
 import lombok.experimental.UtilityClass;
 import org.apache.commons.io.IOUtils;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import ro.ps.chefmgmtmail.dto.mail.MailRequestDTO;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.Map;
 
 @UtilityClass
 public class MailUtils {

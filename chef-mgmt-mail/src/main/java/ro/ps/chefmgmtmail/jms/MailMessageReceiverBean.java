@@ -9,7 +9,7 @@ import ro.ps.chefmgmtmail.service.mail.MailService;
 
 @Slf4j
 @RequiredArgsConstructor
-public class MailMessageReceiver implements MessageReceiver {
+public class MailMessageReceiverBean implements MessageReceiver {
 
     private final MailService mailService;
     private final ObjectMapper objectMapper;
