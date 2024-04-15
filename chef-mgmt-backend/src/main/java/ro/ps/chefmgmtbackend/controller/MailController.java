@@ -1,7 +1,7 @@
 package ro.ps.chefmgmtbackend.controller;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,11 +20,18 @@ import ro.ps.chefmgmtbackend.service.mail.MailService;
 @RestController
 @CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 @RequestMapping("/mail/v1")
-@RequiredArgsConstructor
 public class MailController {
 
     private final MailService syncMailServiceBean;
     private final MailService asyncMailServiceBean;
+
+    public MailController(
+            @Qualifier("syncMailServiceBean") MailService syncMailServiceBean,
+            @Qualifier("asyncMailServiceBean") MailService asyncMailServiceBean
+    ) {
+        this.syncMailServiceBean = syncMailServiceBean;
+        this.asyncMailServiceBean = asyncMailServiceBean;
+    }
 
     @PostMapping("sync")
     @PreAuthorize("hasRole('ADMIN')")

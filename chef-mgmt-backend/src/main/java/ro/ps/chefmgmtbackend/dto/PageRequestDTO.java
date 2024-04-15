@@ -1,4 +1,3 @@
-
 package ro.ps.chefmgmtbackend.dto;
 
 import jakarta.validation.constraints.NotNull;

@@ -1,5 +1,10 @@
 package ro.ps.chefmgmtbackend.security.filter;
 
+import java.io.IOException;
+import java.util.Collection;
+import java.util.List;
+import javax.crypto.SecretKey;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -19,11 +24,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 import ro.ps.chefmgmtbackend.exception.ExceptionBody;
 import ro.ps.chefmgmtbackend.security.util.JwtUtil;
-
-import javax.crypto.SecretKey;
-import java.io.IOException;
-import java.util.Collection;
-import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor

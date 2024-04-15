@@ -3,18 +3,14 @@ package ro.ps.chefmgmtbackend.service.chef;
 import java.util.List;
 import java.util.UUID;
 
-import ro.ps.chefmgmtbackend.dto.chef.ChefRequestDTO;
-import ro.ps.chefmgmtbackend.dto.chef.ChefResponseDTO;
 import ro.ps.chefmgmtbackend.dto.CollectionResponseDTO;
 import ro.ps.chefmgmtbackend.dto.PageRequestDTO;
+import ro.ps.chefmgmtbackend.dto.chef.ChefRequestDTO;
+import ro.ps.chefmgmtbackend.dto.chef.ChefResponseDTO;
 
 /**
- * Service class that defines Chef CRUD operations
- * This includes:
- * - Finding a chef by id
- * - Finding all chefs
- * - Finding all chefs with a given rating
- * - Saving a chef
+ * Service class that defines Chef CRUD operations This includes: - Finding a chef by id - Finding all chefs - Finding
+ * all chefs with a given rating - Saving a chef
  */
 public interface ChefService {
 

@@ -1,5 +1,7 @@
 package ro.ps.chefmgmtbackend.security.filter;
 
+import java.io.IOException;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,8 +20,6 @@ import ro.ps.chefmgmtbackend.dto.auth.LoginRequestDTO;
 import ro.ps.chefmgmtbackend.exception.ExceptionBody;
 import ro.ps.chefmgmtbackend.security.util.JwtUtil;
 import ro.ps.chefmgmtbackend.security.util.SecurityConstants;
-
-import java.io.IOException;
 
 @Slf4j
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
@@ -53,7 +53,12 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) {
+    protected void successfulAuthentication(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain chain,
+            Authentication authResult
+    ) {
         String accessToken = JwtUtil.generateJwtToken(
                 ((User) authResult.getPrincipal()).getUsername(),
                 authResult.getAuthorities()
@@ -64,7 +69,11 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     }
 
     @Override
-    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException {
+    protected void unsuccessfulAuthentication(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            AuthenticationException failed
+    ) throws IOException {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
 

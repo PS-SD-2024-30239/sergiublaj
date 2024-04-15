@@ -1,4 +1,3 @@
-
 package ro.ps.chefmgmtbackend.dto;
 
 import java.util.List;

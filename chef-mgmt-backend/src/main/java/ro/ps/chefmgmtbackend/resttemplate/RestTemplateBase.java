@@ -1,7 +1,6 @@
 package ro.ps.chefmgmtbackend.resttemplate;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.web.reactive.function.client.WebClientSsl;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
