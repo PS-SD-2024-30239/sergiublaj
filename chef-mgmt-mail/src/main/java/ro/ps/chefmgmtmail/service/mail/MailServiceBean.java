@@ -1,7 +1,5 @@
 package ro.ps.chefmgmtmail.service.mail;
 
-import java.io.IOException;
-
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
