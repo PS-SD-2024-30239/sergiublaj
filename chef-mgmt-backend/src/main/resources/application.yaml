@@ -23,4 +23,4 @@ security:
   secret-key: PS-SD-2024-3023X-1q2w3e4r5t6y7u8i9o0p
   token-expiration-days: 15
 mail-sender-app:
-  url: http://localhost:8888/api/mail/v1
+  url: http://localhost:8888/api/mail/v1/sync
