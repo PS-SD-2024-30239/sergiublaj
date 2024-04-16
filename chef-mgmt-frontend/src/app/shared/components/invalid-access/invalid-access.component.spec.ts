@@ -9,7 +9,7 @@ describe('InvalidAccessComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ InvalidAccessComponent ],
+      imports: [ InvalidAccessComponent ]
     })
       .compileComponents();
 

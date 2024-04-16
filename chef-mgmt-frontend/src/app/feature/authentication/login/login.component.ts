@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { LoginModel } from '../../../shared/models/login.model';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss',
+  styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit {
 
@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private userService: UserService,
     private router: Router,
+    private destroyRef: DestroyRef
   ) {
   }
 
@@ -38,26 +39,26 @@ export class LoginComponent implements OnInit {
 
     const credentials: LoginModel = {
       email: this.loginForm?.get('email')?.value,
-      password: this.loginForm?.get('password2')?.value,
+      password: this.loginForm?.get('password2')?.value
     };
     this.authService.login(credentials)
-      .pipe(takeUntilDestroyed())
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => this.getUserInfo(),
-        error: () => this.errorMessage = 'Invalid credentials',
+        error: () => this.errorMessage = 'Invalid credentials'
       });
   }
 
   private buildLoginForm(): void {
     this.loginForm = this.formBuilder.group({
       email: [ '', [ Validators.required, Validators.email ] ],
-      password2: [ '', [ Validators.required ] ],
+      password2: [ '', [ Validators.required ] ]
     });
   }
 
   private getUserInfo(): void {
     this.userService.getInfo()
-      .pipe(takeUntilDestroyed())
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(response => {
         localStorage.setItem('loggedUser', JSON.stringify(response));
         this.router.navigateByUrl('/dashboard/chefs');

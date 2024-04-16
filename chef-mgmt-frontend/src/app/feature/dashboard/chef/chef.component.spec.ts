@@ -9,7 +9,7 @@ describe('ChefComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ ChefComponent ],
+      imports: [ ChefComponent ]
     })
       .compileComponents();
 

@@ -5,7 +5,7 @@ import { LoginModel } from '../../../shared/models/login.model';
 
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AuthService {
 

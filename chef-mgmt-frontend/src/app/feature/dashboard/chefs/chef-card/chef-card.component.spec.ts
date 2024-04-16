@@ -9,7 +9,7 @@ describe('ChefCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ ChefCardComponent ],
+      imports: [ ChefCardComponent ]
     })
       .compileComponents();
 
