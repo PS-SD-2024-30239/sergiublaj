@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ChefService } from '../../../core/service/chef/chef.service';
@@ -10,12 +11,11 @@ import { ChefModel } from '../../../shared/models/chef.model';
   templateUrl: './chefs.component.html',
   styleUrl: './chefs.component.scss',
 })
-export class ChefsComponent implements OnInit, OnDestroy {
+export class ChefsComponent implements OnInit {
 
   chefs: ChefModel[] = [];
   rating: number = 0;
   getAllSubscription?: Subscription;
-  getAllByRatingSubscription?: Subscription;
 
   constructor(private chefService: ChefService, private router: Router) {
   }
@@ -24,12 +24,9 @@ export class ChefsComponent implements OnInit, OnDestroy {
     this.getChefs();
   }
 
-  ngOnDestroy(): void {
-    this.unsubscribeFromSubscribers();
-  }
-
   searchAllByRating() {
-    this.getAllByRatingSubscription = this.chefService.getAll(this.rating)
+    this.chefService.getAll(this.rating)
+      .pipe(takeUntilDestroyed())
       .subscribe(response => this.chefs = response);
   }
 
@@ -43,13 +40,9 @@ export class ChefsComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/auth/login');
   }
 
-  private unsubscribeFromSubscribers(): void {
-    this.getAllSubscription?.unsubscribe();
-    this.getAllByRatingSubscription?.unsubscribe();
-  }
-
   private getChefs(): void {
     this.getAllSubscription = this.chefService.getAll()
+      .pipe(takeUntilDestroyed())
       .subscribe({
         next: response => this.chefs = response,
         error: err => console.log(err),

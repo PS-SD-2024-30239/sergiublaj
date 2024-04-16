@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { ChefService } from '../../../core/service/chef/chef.service';
 import { ChefModel } from '../../../shared/models/chef.model';
 
@@ -10,12 +10,10 @@ import { ChefModel } from '../../../shared/models/chef.model';
   templateUrl: './chef.component.html',
   styleUrl: './chef.component.scss',
 })
-export class ChefComponent implements OnInit, OnDestroy {
+export class ChefComponent implements OnInit {
 
   chef?: ChefModel;
   chefId?: string;
-  queryParamSubscription?: Subscription;
-  getByIdSubscription?: Subscription;
 
   constructor(private route: ActivatedRoute, private chefService: ChefService) {
   }
@@ -24,22 +22,15 @@ export class ChefComponent implements OnInit, OnDestroy {
     this.getChefById();
   }
 
-  ngOnDestroy(): void {
-    this.unsubscribeFromSubscribers();
-  }
-
   private getChefById(): void {
-    this.queryParamSubscription = this.route.params.subscribe(response => {
-      this.chefId = response['id'];
+    this.route.params
+      .pipe(takeUntilDestroyed())
+      .subscribe(response => {
+        this.chefId = response['id'];
 
-      this.getByIdSubscription = this.chefService.getById(this.chefId || '')
-        .subscribe(response => this.chef = response);
-    });
+        this.chefService.getById(this.chefId || '')
+          .pipe(takeUntilDestroyed())
+          .subscribe(response => this.chef = response);
+      });
   }
-
-  private unsubscribeFromSubscribers(): void {
-    this.queryParamSubscription?.unsubscribe();
-    this.getByIdSubscription?.unsubscribe();
-  }
-
 }

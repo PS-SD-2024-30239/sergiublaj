@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { AuthService } from '../../../core/service/auth/auth.service';
 import { UserService } from '../../../core/service/user/user.service';
 import { LoginModel } from '../../../shared/models/login.model';
@@ -12,12 +12,10 @@ import { LoginModel } from '../../../shared/models/login.model';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
 
   loginForm: FormGroup = new FormGroup({});
   errorMessage?: string;
-  loginSubscription?: Subscription;
-  getInfoSubscription?: Subscription;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -31,10 +29,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.buildLoginForm();
   }
 
-  ngOnDestroy(): void {
-    this.unsubscribeFromSubscribers();
-  }
-
   login(): void {
     if (!this.loginForm?.valid) {
       this.errorMessage = 'Invalid form completion!';
@@ -46,10 +40,12 @@ export class LoginComponent implements OnInit, OnDestroy {
       email: this.loginForm?.get('email')?.value,
       password: this.loginForm?.get('password2')?.value,
     };
-    this.loginSubscription = this.authService.login(credentials).subscribe({
-      next: () => this.getUserInfo(),
-      error: () => this.errorMessage = 'Invalid credentials',
-    });
+    this.authService.login(credentials)
+      .pipe(takeUntilDestroyed())
+      .subscribe({
+        next: () => this.getUserInfo(),
+        error: () => this.errorMessage = 'Invalid credentials',
+      });
   }
 
   private buildLoginForm(): void {
@@ -59,15 +55,12 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
 
-  private unsubscribeFromSubscribers(): void {
-    this.loginSubscription?.unsubscribe();
-    this.getInfoSubscription?.unsubscribe();
-  }
-
   private getUserInfo(): void {
-    this.getInfoSubscription = this.userService.getInfo().subscribe(response => {
-      localStorage.setItem('loggedUser', JSON.stringify(response));
-      this.router.navigateByUrl('/dashboard/chefs');
-    });
+    this.userService.getInfo()
+      .pipe(takeUntilDestroyed())
+      .subscribe(response => {
+        localStorage.setItem('loggedUser', JSON.stringify(response));
+        this.router.navigateByUrl('/dashboard/chefs');
+      });
   }
 }
