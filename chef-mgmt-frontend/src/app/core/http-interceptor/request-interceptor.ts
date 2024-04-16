@@ -7,7 +7,7 @@ export const requestInterceptor: HttpInterceptorFn = (req, next) => {
   const modifiedReq = req.clone({
     url: getUrl(req.url),
     headers: getHeaders(req.url),
-    withCredentials: true,
+    withCredentials: true
   });
 
   return next(modifiedReq);

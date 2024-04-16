@@ -5,7 +5,7 @@ import { UserModel } from '../../../shared/models/user.model';
 
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class UserService {
 

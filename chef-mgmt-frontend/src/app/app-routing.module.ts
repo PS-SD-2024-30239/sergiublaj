@@ -10,8 +10,8 @@ export const routes: Routes = [
     canActivate: [ authGuard ],
     data: {
       jwtTokenPresent: false,
-      redirectUrl: '/dashboard/chefs',
-    },
+      redirectUrl: '/dashboard/chefs'
+    }
   },
   {
     path: 'dashboard',
@@ -19,18 +19,18 @@ export const routes: Routes = [
     canActivate: [ authGuard ],
     data: {
       jwtTokenPresent: true,
-      redirectUrl: '/auth/login',
-    },
+      redirectUrl: '/auth/login'
+    }
   },
   {
     path: '**',
-    redirectTo: 'dashboard',
-  },
+    redirectTo: 'dashboard'
+  }
 ];
 
 @NgModule({
   imports: [ RouterModule.forRoot(routes) ],
-  exports: [ RouterModule ],
+  exports: [ RouterModule ]
 })
 export class AppRoutingModule {
 }

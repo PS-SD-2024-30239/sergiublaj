@@ -6,7 +6,7 @@ import { ChefModel } from '../../../../shared/models/chef.model';
 @Component({
   selector: 'app-chef-card',
   templateUrl: './chef-card.component.html',
-  styleUrl: './chef-card.component.scss',
+  styleUrl: './chef-card.component.scss'
 })
 export class ChefCardComponent {
 

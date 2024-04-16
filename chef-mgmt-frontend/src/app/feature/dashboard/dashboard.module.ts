@@ -11,13 +11,13 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
   declarations: [
     ChefsComponent,
     ChefComponent,
-    ChefCardComponent,
+    ChefCardComponent
   ],
   imports: [
     CommonModule,
     DashboardRoutingModule,
-    FormsModule,
-  ],
+    FormsModule
+  ]
 })
 export class DashboardModule {
 }

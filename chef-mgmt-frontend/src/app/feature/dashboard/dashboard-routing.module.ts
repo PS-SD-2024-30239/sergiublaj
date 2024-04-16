@@ -13,38 +13,38 @@ export const routes: Routes = [
     component: ChefsComponent,
     canActivate: [ hasRole ],
     data: {
-      requiredRoles: [ 'ADMIN', 'USER' ],
-    },
+      requiredRoles: [ 'ADMIN', 'USER' ]
+    }
   },
   {
     path: 'chef/:id',
     component: ChefComponent,
     canActivate: [ hasRole ],
     data: {
-      requiredRoles: [ 'ADMIN' ],
-    },
+      requiredRoles: [ 'ADMIN' ]
+    }
   },
   {
     path: 'invalid-access',
-    component: InvalidAccessComponent,
+    component: InvalidAccessComponent
   },
   {
     path: 'not-found',
-    component: NotFoundComponent,
+    component: NotFoundComponent
   },
   {
     path: '**',
-    redirectTo: 'chefs',
-  },
+    redirectTo: 'chefs'
+  }
 ];
 
 @NgModule({
   imports: [
     InvalidAccessComponent,
     NotFoundComponent,
-    RouterModule.forChild(routes),
+    RouterModule.forChild(routes)
   ],
-  exports: [ RouterModule ],
+  exports: [ RouterModule ]
 })
 export class DashboardRoutingModule {
 }

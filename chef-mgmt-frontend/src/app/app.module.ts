@@ -11,7 +11,7 @@ import { requestInterceptor } from './core/http-interceptor/request-interceptor'
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -20,12 +20,12 @@ import { requestInterceptor } from './core/http-interceptor/request-interceptor'
     HttpClientModule,
     RouterModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
+    BrowserAnimationsModule
   ],
   providers: [
-    provideHttpClient(withInterceptors([ requestInterceptor ])),
+    provideHttpClient(withInterceptors([ requestInterceptor ]))
   ],
-  bootstrap: [ AppComponent ],
+  bootstrap: [ AppComponent ]
 })
 export class AppModule {
 }
