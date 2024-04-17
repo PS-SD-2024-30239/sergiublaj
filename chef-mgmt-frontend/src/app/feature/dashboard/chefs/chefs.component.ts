@@ -1,24 +1,22 @@
 import { Component, DestroyRef, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { ChefService } from '../../../core/service/chef/chef.service';
 import { ChefModel } from '../../../shared/models/chef.model';
 
 
 @Component({
-  selector: 'app-chefs', templateUrl: './chefs.component.html', styleUrl: './chefs.component.scss'
+  selector: 'app-chefs', templateUrl: './chefs.component.html', styleUrl: './chefs.component.scss',
 })
 export class ChefsComponent implements OnInit {
 
   chefs: ChefModel[] = [];
   rating: number = 0;
-  getAllSubscription?: Subscription;
 
   constructor(
     private chefService: ChefService,
     private router: Router,
-    private destroyRef: DestroyRef
+    private destroyRef: DestroyRef,
   ) {
   }
 
@@ -43,10 +41,10 @@ export class ChefsComponent implements OnInit {
   }
 
   private getChefs(): void {
-    this.getAllSubscription = this.chefService.getAll()
+    this.chefService.getAll()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: response => this.chefs = response, error: err => console.log(err)
+        next: response => this.chefs = response, error: err => console.log(err),
       });
   }
 
