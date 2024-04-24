@@ -5,6 +5,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import ro.ps.chefmgmtbackend.exception.RestTemplateException;
 
@@ -15,13 +16,18 @@ public abstract class RestTemplateBase<Request, Response> {
 
     public Response postForEntity(String url, Request request) {
         HttpEntity<Request> requestEntity = buildRequestEntity(request);
-        ResponseEntity<Response> responseEntity = restTemplate.postForEntity(url, requestEntity, getResponseType());
 
-        if (!responseEntity.getStatusCode().is2xxSuccessful()) {
+        try {
+            ResponseEntity<Response> responseEntity = restTemplate.postForEntity(url, requestEntity, getResponseType());
+
+            if (!responseEntity.getStatusCode().is2xxSuccessful()) {
+                throw new RestTemplateException(getExceptionMessage(request));
+            }
+
+            return responseEntity.getBody();
+        } catch (RestClientException e) {
             throw new RestTemplateException(getExceptionMessage(request));
         }
-
-        return responseEntity.getBody();
     }
 
     public abstract Class<Response> getResponseType();
