@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:chef_mgmt_test_db
+    driver-class-name: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
+security:
+  admin-jwt-token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsInJvbGUiOlsiUk9MRV9BRE1JTiJdLCJleHAiOjQ4NzA1MzAwMDB9.GJcKZ-FVh7kzTtdR5giafGWd2ogJkD9nHABzmEmVg4Q
+  invalid-jwt-token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBtYWlsLmNvbSIsInJvbGUiOlsiUk9MRV9BRE1JTiJdLCJleHAiOi01MzM2NTk4MzE0NzMxOTAzfQ.C6yF6gr1labvp1QT

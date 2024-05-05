@@ -1,0 +1,2 @@
+INSERT INTO chef(id, name, rating)
+VALUES ('00000000-0000-0000-0000-000000000000', 'John Doe', 5.0);
