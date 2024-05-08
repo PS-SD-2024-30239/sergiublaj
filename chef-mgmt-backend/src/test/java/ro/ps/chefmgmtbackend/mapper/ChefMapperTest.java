@@ -20,7 +20,7 @@ class ChefMapperTest {
 
     @BeforeEach
     void setUp() {
-        this.underTest = Mappers.getMapper(ChefMapper.class);
+        underTest = Mappers.getMapper(ChefMapper.class);
     }
 
     @Test

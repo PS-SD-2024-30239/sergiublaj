@@ -15,7 +15,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import ro.ps.chefmgmtbackend.dto.chef.ChefResponseDTO;
 
@@ -47,7 +46,7 @@ class ChefControllerIT {
         final var chefId = UUID.fromString("00000000-0000-0000-0000-000000000000");
         final var headers = getHeadersEntity(invalidJwtToken);
 
-        final ResponseEntity<ChefResponseDTO> response = testRestTemplate.exchange(
+        final var response = testRestTemplate.exchange(
                 String.format("%s/%s", API_URL, chefId),
                 HttpMethod.GET,
                 headers,
@@ -63,7 +62,7 @@ class ChefControllerIT {
         final var headers = getHeadersEntity(adminJwtToken);
         final var expected = getChefResponseDTO();
 
-        final ResponseEntity<ChefResponseDTO> response = testRestTemplate.exchange(
+        final var response = testRestTemplate.exchange(
                 String.format("%s/%s", API_URL, chefId),
                 HttpMethod.GET,
                 headers,
@@ -79,7 +78,7 @@ class ChefControllerIT {
         final var chefId = UUID.fromString("99999999-9999-9999-9999-999999999999");
         final var headers = getHeadersEntity(adminJwtToken);
 
-        final ResponseEntity<ChefResponseDTO> response = testRestTemplate.exchange(
+        final var response = testRestTemplate.exchange(
                 String.format("%s/%s", API_URL, chefId),
                 HttpMethod.GET,
                 headers,

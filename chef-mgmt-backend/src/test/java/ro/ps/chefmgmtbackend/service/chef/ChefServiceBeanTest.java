@@ -38,7 +38,7 @@ class ChefServiceBeanTest {
         this.underTest = new ChefServiceBean(
                 chefRepositoryMock,
                 chefMapperMock,
-                ""
+                null
         );
     }
 
