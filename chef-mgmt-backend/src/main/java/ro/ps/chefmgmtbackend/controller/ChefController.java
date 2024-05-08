@@ -46,6 +46,7 @@ public class ChefController {
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionBody.class))})
     })
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<ChefResponseDTO> findById(@PathVariable("id") UUID chefId) {
         return new ResponseEntity<>(
                 chefService.findById(chefId),

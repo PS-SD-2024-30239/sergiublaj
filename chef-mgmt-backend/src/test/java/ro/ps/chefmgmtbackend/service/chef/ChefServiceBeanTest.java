@@ -58,9 +58,7 @@ class ChefServiceBeanTest {
 
     @Test
     void givenInvalidChefId_whenFindByIdIsCalled_thenThrowException() {
-        final var chefResponseDTO = getChefResponseDTO();
         when(chefRepositoryMock.findById(any(UUID.class))).thenReturn(Optional.empty());
-        when(chefMapperMock.chefEntityToChefResponseDTO(any(ChefEntity.class))).thenReturn(chefResponseDTO);
 
         assertThatThrownBy(() -> underTest.findById(CHEF_ID))
                 .isInstanceOf(NotFoundException.class);
