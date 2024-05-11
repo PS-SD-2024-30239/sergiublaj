@@ -4,10 +4,10 @@
   <div class="mb-3 d-flex flex-row">
     <label class="form-label">Rating: </label>
     <input [(ngModel)]="rating" class="form-control" type="number">
-    <button (click)="searchAllByRating()" class="btn btn-info">
+    <button id="search-button" (click)="searchAllByRating()" class="btn btn-info">
       <i class="fa fa-magnifying-glass"></i>
     </button>
-    <button (click)="logOut()" class="btn btn-danger">
+    <button id="logout-button" (click)="logOut()" class="btn btn-danger">
       <i class="fa fa-right-from-bracket"></i>
     </button>
   </div>
@@ -16,7 +16,7 @@
     @for (chef of chefs; track chef.id) {
       <app-chef-card [chef]="chef" (deleteChef)="deleteChefCalled($event)"></app-chef-card>
     } @empty {
-      <p>No chef</p>
+      <p id="empty-chefs">No chef</p>
     }
   </div>
 </div>
