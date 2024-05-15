@@ -1,4 +1,6 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterModule } from '@angular/router';
 
 import { ChefComponent } from './chef.component';
 
@@ -9,7 +11,8 @@ describe('ChefComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ ChefComponent ]
+      imports: [ RouterModule.forRoot([]), HttpClientModule ],
+      declarations: [ ChefComponent ]
     })
       .compileComponents();
 
